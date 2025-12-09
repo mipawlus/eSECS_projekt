@@ -7,16 +7,18 @@ Celem aplikacji jest stworzenie kompleksowego narzędzia do ewidencji czasu słu
 zarządza jednostkami, strażakami, strukturą organizacyjną,
 ustala ustawienia globalne (normy godzinowe, typy służb, uprawnienia),
 może edytować wszystko.
-
-2.2 Dowódca / Kierownik
 tworzy i zatwierdza grafiki służb,
 zarządza podwładnymi,
 dodaje urlopy, nieobecności, dyżury, wyjazdy szkoleniowe,
 generuje raporty miesięczne.
-podgląd grafiku całej zmiany lub komórki organizacyjnej,
 podgląd normy godzinowej i nadgodzin,
 otrzymuje powiadomienia.
-eksport danych do systemów zewnętrznych.
+eksport ilości nadgodzin i zwolnień.
+
+2.2 Dowódca / Kierownik
+dodaje urlopy, nieobecności, dyżury, wyjazdy szkoleniowe,
+podgląd grafiku całej zmiany lub komórki organizacyjnej,
+podgląd normy godzinowej i nadgodzin,
 
 3 Model czasu służby i rozliczeń
 3.1 Obsługiwane systemy pracy:
@@ -24,6 +26,7 @@ eksport danych do systemów zewnętrznych.
 służba codzienna 8-godzinna,
 dyżury domowe,
 system mieszany.
+
 
 3.2 Elementy podlegające ewidencji:
 służby pełne,
@@ -59,28 +62,12 @@ rejestr zwolnień lekarskich,
 rejestr szkoleń i delegacji,
 obsługa dyżurów domowych.
 
-4.3 Panel strażaka
-podgląd swojego harmonogramu,
-historia urlopów i nadgodzin,
-powiadomienia o zmianach w grafiku,
-składanie wniosków (urlop, zamiana służb, odpracowanie).
-
 4.4 Raportowanie
 raport miesięczny do zatwierdzenia przez dowódcę,
 raport roczny,
 zestawienia godzin służb, nadgodzin, urlopów,
 eksport PDF/Excel,
 raporty dla PSP, KW, KG.
-
-4.5 Integracje (opcjonalne)
-import danych z systemów kadrowych,
-integracja z RCP (rejestr wejść/wyjść),
-integracja z systemami alarmowania.
-
-4.6 Powiadomienia
-e-mail / SMS (opcjonalnie),
-powiadomienia web push,
-alerty o błędach w grafiku.
 
 5 Technologia i architektura
 5.1 Frontend
@@ -94,7 +81,6 @@ Node.js / NestJS
 Python / Django
  lub
 Laravel (PHP)
-
 Backend zapewnia:
 logikę rozliczania godzin,
 bezpieczeństwo danych,
@@ -136,7 +122,6 @@ kolory: służba, wolne, dyżur, urlop, L4 itd.
 9.3 Panel dowódcy
 lista strażaków,
 szybkie statystyki,
-raporty.
 podgląd grafiku
 
 
