@@ -1,8 +1,8 @@
 🚒 SPECYFIKACJA APLIKACJI: SYSTEM EWIDENCJI CZASU SŁUŻBY STRAŻAKÓW
-1. Cel systemu
+1 Cel systemu
 Celem aplikacji jest stworzenie kompleksowego narzędzia do ewidencji czasu służby strażaków dla jednostek PSP i OSP, obejmującego planowanie grafików, rozliczanie godzin, nadgodzin, urlopów, nieobecności, prowadzenie dokumentacji oraz generowanie raportów w formacie PDF/Excel. System ma usprawnić pracę dowódców, kadr oraz samych strażaków, zapewniając przejrzystość i automatyzację procesów.
 
-2. Użytkownicy i role
+2 Użytkownicy i role
 2.1 Administrator systemu
 zarządza jednostkami, strażakami, strukturą organizacyjną,
 ustala ustawienia globalne (normy godzinowe, typy służb, uprawnienia),
@@ -18,7 +18,7 @@ podgląd normy godzinowej i nadgodzin,
 otrzymuje powiadomienia.
 eksport danych do systemów zewnętrznych.
 
-3. Model czasu służby i rozliczeń
+3 Model czasu służby i rozliczeń
 3.1 Obsługiwane systemy pracy:
 24/48 (standard PSP),
 służba codzienna 8-godzinna,
@@ -45,7 +45,7 @@ rozliczanie nadgodzin zgodnie z zasadami PSP,
 wyrównywanie godzin,
 wykrywanie błędów (np. "strażak wpisany na dwóch służbach jednocześnie").
 
-4. Funkcjonalności systemu
+4 Funkcjonalności systemu
 4.1 Planowanie grafików
 widok miesięczny dla całej JRG,
 przeciąganie i upuszczanie służb (drag&drop),
@@ -82,7 +82,7 @@ e-mail / SMS (opcjonalnie),
 powiadomienia web push,
 alerty o błędach w grafiku.
 
-5. Technologia i architektura
+5 Technologia i architektura
 5.1 Frontend
 React / Next.js,
 mobilna responsywność,
@@ -108,21 +108,21 @@ dane szyfrowane.
 REST lub GraphQL,
 możliwość integracji z systemami zewnętrznymi.
 
-6. Bezpieczeństwo
+6 Bezpieczeństwo
 szyfrowanie danych (w tym haseł),
 kopie zapasowe,
 role i uprawnienia oparte na RBAC,
 logowanie aktywności systemowej.
 
-7. Dostęp i logowanie
+7 Dostęp i logowanie
 login + hasło,
 opcjonalnie SSO (Microsoft/Google),
 ograniczenia IP dla stanowisk kadrowych / dowódczych.
 
-8. Moduły dodatkowe (opcjonalnie)
+8 Moduły dodatkowe (opcjonalnie)
 terminarz badań lekarskich i szkoleń,
 
-9. Widoki aplikacji
+9 Widoki aplikacji
 9.1 Dashboard
 dzisiejsze służby,
 nadgodziny do rozliczenia,
@@ -139,6 +139,39 @@ szybkie statystyki,
 raporty.
 podgląd grafiku
 
+
+Menubar ma byc po lewej stronie, ma skladaĆ się z:
+- pulpit
+- harmonogram
+- czas służby
+- zwolnienia chorobowe
+- urlop
+- nadgodziny
+- analiza
+- konfiguracja
+- pomoc
+
+na dole po lewej nazwa użytkownika
+a pod nia jednostka lub komórka
+
+- pulpit ma miec:
+1. dymek powitalny Witaj
+2. okno kalendarza, kalendarz ma miec wszystkie miesiace roku z mozliwoscią przejscia w lewo i prawo
+w miesiacu sluzba danej zmiany ma byc zaznaczona konkretnym kolorem, system jest trojzmianowy
+- harmonogram:
+w górnym menu ikona plik: drukuj harmonogram, drukuj grafik, drukuj stan faktyczny, drukuj liste obecnosci, drukuj podsumowanie
+poniżej w menu karty: harmonogram, grafik, stan faktyczny
+poniżej w menu karty: zmiana 1, zmiana 2, zmiana 3, 8 - godzinni
+- czas służby: w menu karty: cały okres, Od - dole
+wiersz z nagłówkami: Imie i nazwisko strażaka, faktycznie na slużbie, urlop wypoczynkowy, urlop dodatkowy, urlop ojcowski, zwolnienia chorobowe, nieobecności usprawiedliwione, szkolenie, urlop szkoleniowy, delegacja
+następnie rozwijane wiersze: zmiana 1, zmiana 2, zmiana 3, 8 godzinni w ktorych po rozwinieciu pojawia sie strazacy z imienia i nazwiska 
+- zwolnienia chorobowe: w menu kart ewidencja zwolnień, raport zwolnień do potraćeń, zastępstwa, raport zwolnień za okres
+Imie strazaka, nazwisko strazaka, numer pesel/ewd, stopien, od, do, przyczyna zwolnienia, wysokosc uposazenia, data dostarczenia, data wprowadzenia, forma, data wystawienia
+- urlopy w trakcie
+- nadgodziny w trakcie
+- analiza - możliwość przejrzenia danych do urlopach, nadgodzinach itd
+- konfiguracja jednostki: zarzadzanie zmianami, zarzadznie hasłami, zarzadzanie stanami minimalnymi, zarzadzenia specjalizacjami, specjalizacje strazakow
+plus dodawanie jednostek, strazakow do jednostek, do zmian na jednostkach, do systemu 8-godzinnego
 
 Diagram graficzny
 
