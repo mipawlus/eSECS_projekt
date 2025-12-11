@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Model użytkownika (Administrator / Dowódca)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole
+  unitId    String?
+  unit      Unit?    @relation(fields: [unitId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMINISTRATOR
+  DOWODCA
+}
+
+// Jednostka (JRG)
+model Unit {
+  id          String       @id @default(cuid())
+  name        String
+  address     String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  firefighters Firefighter[]
+  shifts      Shift[]
+  users       User[]
+
+  @@map("units")
+}
+
+// Zmiana (1, 2, 3, 8-godzinni)
+model Shift {
+  id             String        @id @default(cuid())
+  name           String        // "Zmiana 1", "Zmiana 2", "Zmiana 3", "8-godzinni"
+  color          String        @default("#FF0000") // domyślny kolor
+  startTime      String?       // np. "08:00"
+  endTime        String?       // np. "08:00"
+  minStaffCount  Int           @default(0)
+  unitId         String
+  unit           Unit          @relation(fields: [unitId], references: [id])
+  firefighters   Firefighter[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("shifts")
+}
+
+// Strażak
+model Firefighter {
+  id              String           @id @default(cuid())
+  firstName       String
+  lastName        String
+  pesel           String?          @unique
+  ewd             String?
+  rank            String           // stopień
+  position        String?          // stanowisko
+  serviceType     ServiceType      // 24/48 czy 8-godzinny
+  unitId          String
+  unit            Unit             @relation(fields: [unitId], references: [id])
+  shiftId         String?
+  shift           Shift?           @relation(fields: [shiftId], references: [id])
+  scheduleEntries ScheduleEntry[]
+  absences        Absence[]
+  overtimes       Overtime[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@map("firefighters")
+}
+
+enum ServiceType {
+  SHIFT_24_48     // zmianowy 24/48
+  DAILY_8H        // codzienny 8h
+  ON_CALL         // dyżur domowy
+}
+
+// Wpis w grafiku (każdy dzień służby)
+model ScheduleEntry {
+  id              String       @id @default(cuid())
+  firefighterId   String
+  firefighter     Firefighter  @relation(fields: [firefighterId], references: [id], onDelete: Cascade)
+  date            DateTime
+  entryType       EntryType
+  hoursWorked     Float        @default(0) // automatycznie wyliczane
+  notes           String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  createdBy       String?      // kto wprowadził
+
+  @@unique([firefighterId, date])
+  @@map("schedule_entries")
+}
+
+enum EntryType {
+  SLUZBA_24H              // służba 24h
+  SLUZBA_SKROCONA         // służba skrócona
+  SLUZBA_8H               // 8-godzinna
+  SZKOLENIE               // szkolenie
+  SZKOLENIE_SPECJALISTYCZNE // szkolenie specjalistyczne
+  DELEGACJA               // delegacja
+  DYZUR_DOMOWY            // dyżur domowy
+  DYZUR_OPERACYJNY        // dyżur operacyjny
+  URLOP_WYPOCZYNKOWY      // urlop wypoczynkowy
+  URLOP_DODATKOWY         // urlop dodatkowy
+  URLOP_OJCOWSKI          // urlop ojcowski
+  L4                      // zwolnienie lekarskie
+  NIEOBECNOSC_USPRAWIEDLIWIONA // nieobecność usprawiedliwiona
+  ODPRACOWANIE            // odpracowanie
+  ZAWODY                  // zawody / wydarzenia
+  WOLNE                   // dzień wolny
+}
+
+// Urlopy i L4
+model Absence {
+  id              String       @id @default(cuid())
+  firefighterId   String
+  firefighter     Firefighter  @relation(fields: [firefighterId], references: [id], onDelete: Cascade)
+  type            AbsenceType
+  dateFrom        DateTime
+  dateTo          DateTime
+  certificateNo   String?      // numer zaświadczenia
+  salary          Float?       // wysokość uposażenia (dla L4)
+  deliveryDate    DateTime?    // data dostarczenia
+  issueDate       DateTime?    // data wystawienia
+  form            String?      // forma
+  reason          String?      // przyczyna
+  createdBy       String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@map("absences")
+}
+
+enum AbsenceType {
+  URLOP_WYPOCZYNKOWY
+  URLOP_DODATKOWY
+  URLOP_OJCOWSKI
+  L4
+  URLOP_SZKOLENIOWY
+}
+
+// Nadgodziny (rozliczenie miesięczne)
+model Overtime {
+  id              String       @id @default(cuid())
+  firefighterId   String
+  firefighter     Firefighter  @relation(fields: [firefighterId], references: [id], onDelete: Cascade)
+  month           Int          // miesiąc (1-12)
+  year            Int          // rok
+  monthlyNorm     Float        // norma miesięczna
+  hoursWorked     Float        // godziny wypracowane
+  overtime        Float        // nadgodziny (wyliczane)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@unique([firefighterId, month, year])
+  @@map("overtimes")
+}
+
+// Logi systemowe
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String   // "CREATE", "UPDATE", "DELETE"
+  entity    String   // "Firefighter", "ScheduleEntry", etc.
+  entityId  String?
+  changes   String?  // JSON z opisem zmian
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+}

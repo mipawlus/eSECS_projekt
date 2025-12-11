@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app:*)",
+      "Bash(npm install)",
+      "Bash(openssl rand:*)",
+      "Bash(docker:*)",
+      "Bash(psql:*)",
+      "Bash(where:*)",
+      "Bash(npm run db:push:*)",
+      "Bash(timeout 10 bash:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(timeout 2 bash:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

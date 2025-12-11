@@ -1,4 +1,10 @@
 🚒 SPECYFIKACJA APLIKACJI: SYSTEM EWIDENCJI CZASU SŁUŻBY STRAŻAKÓW
+
+> **📦 PROJEKT ZAIMPLEMENTOWANY!**
+> Instrukcje instalacji i uruchomienia znajdują się w pliku [SETUP.md](./SETUP.md)
+
+---
+
 1 Cel systemu
 Celem aplikacji jest stworzenie kompleksowego narzędzia do ewidencji czasu służby strażaków dla jednostek PSP i OSP, obejmującego planowanie grafików, rozliczanie godzin, nadgodzin, urlopów, nieobecności, prowadzenie dokumentacji oraz generowanie raportów w formacie PDF/Excel. System ma usprawnić pracę dowódców, kadr oraz samych strażaków, zapewniając przejrzystość i automatyzację procesów.
 
